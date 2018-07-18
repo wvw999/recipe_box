@@ -1,0 +1,29 @@
+<h1>Create a recipe</h1>
+<label for="title">New Recipe Name</label>
+
+<form action="/recipe" method="post">
+  <input type="text" name="title" value="" placeholder="enter a name">
+  <button type="submit" name="button">create!</button>
+</form>
+
+<h2>list of current recipes</h2>
+<%if @recipes_list != []%>
+  <ul>
+    <%@recipes_list.each do |recipe|%>
+    <li><a href="/recipes/<%= recipe.id %>/display"><%= recipe.title %></a>
+      <form class="form-inline" action="/recipes/<%= recipe.id %>/remove" method="post">
+        <div class="form-group mb-2">
+          <input name="_method" type="hidden" value="delete"><button type="submit" class="btn btn-danger">Delete</button>
+        </div>
+      </form>
+      <form class="form-inline" action="/recipes/<%= recipe.id %>/edit" method="post">
+        <div class="form-group mb-2">
+          <input type="hidden" name="_method" value="update"><button type="submit" class="btn btn-warning">Edit</button>
+        </div>
+      </form>
+    </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>There are no recipes yet!</p>
+<% end %>
