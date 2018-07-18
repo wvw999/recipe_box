@@ -16,6 +16,34 @@ end
 
 post('/recipe') do
   recipe_title = params["title"]
-  new_recipe = Recipe.create({:title => recipe_title})
-  redirect '/'
+  @recipe = Recipe.create({:title => recipe_title})
+  erb(:edit)
 end
+
+get('/recipes/:id/display') do
+  @recipe = Recipe.find(params[:id].to_i)
+  erb(:recipe)
+end
+
+patch('/recipes/:id/ingredient') do
+  @recipe = Recipe.find(params[:id].to_i)
+  new_ingredient = @recipe.ingredients.create({:ingredient_name => params["new_ingredient"]})
+  new_ingredient.amounts.create({:amount => params["amount"], :recipe_id => @recipe.id})
+  erb(:edit)
+end
+
+patch('/recipes/:id/instructions') do
+  @recipe = Recipe.find(params[:id])
+  @recipe.update({:instructions => params["new_instructions"]})
+  erb(:edit)
+end
+
+get('/recipes/:id/edit') do
+  @recipe = Recipe.find(params[:id])
+  erb(:edit)
+end
+
+#
+# post('/recipes/:id/remove') do
+#
+# end

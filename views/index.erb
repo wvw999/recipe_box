@@ -1,29 +1,35 @@
 <h1>Create a recipe</h1>
-<label for="title">New Recipe Name</label>
+<p>&nbsp;</p>
+<h3>New Recipe Name</h3>
 
 <form action="/recipe" method="post">
   <input type="text" name="title" value="" placeholder="enter a name">
   <button type="submit" name="button">create!</button>
 </form>
-
-<h2>list of current recipes</h2>
+<p>&nbsp;</p>
+<h3>current recipes</h3>
+<p>&nbsp;</p>
 <%if @recipes_list != []%>
-  <ul>
-    <%@recipes_list.each do |recipe|%>
-    <li><a href="/recipes/<%= recipe.id %>/display"><%= recipe.title %></a>
+<div class="container">
+  <%@recipes_list.each do |recipe|%>
+  <div class="row">
+    <div class="col-md-3">
+      <a href="/recipes/<%= recipe.id %>/display"><%= recipe.title %></a>
+    </div>
+    <div class="col-md-1">
+      <form class="form-inline" action="/recipes/<%= recipe.id %>/edit" method="get">
+        <button type="submit" class="btn btn-warning">Edit</button>
+      </form>
+    </div>
+    <div class="col-md-1">
       <form class="form-inline" action="/recipes/<%= recipe.id %>/remove" method="post">
-        <div class="form-group mb-2">
-          <input name="_method" type="hidden" value="delete"><button type="submit" class="btn btn-danger">Delete</button>
-        </div>
+        <input name="_method" type="hidden" value="delete">
+        <button type="submit" class="btn btn-danger">Delete</button>
       </form>
-      <form class="form-inline" action="/recipes/<%= recipe.id %>/edit" method="post">
-        <div class="form-group mb-2">
-          <input type="hidden" name="_method" value="update"><button type="submit" class="btn btn-warning">Edit</button>
-        </div>
-      </form>
-    </li>
-    <% end %>
-  </ul>
+    </div>
+  </div>
+  <% end %>
+</div>
 <% else %>
   <p>There are no recipes yet!</p>
 <% end %>

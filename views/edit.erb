@@ -1,0 +1,40 @@
+<h1>Edit the <%= @recipe.title %> Recipe</h1>
+
+<form action="/recipes/<%= @recipe.id %>/ingredient" method="post">
+  <h3>Add ingredient and the amount</h3>
+  <input type="hidden" name="_method" value="patch">
+
+  <label for="new_ingredient">Ingredient Name</label>
+  <input id="new_ingredient" type="text" name="new_ingredient">
+
+  <label for="amount">Ingredient Amount</label>
+  <input id="amount" type="text" name="amount">
+
+  <button type="submit">Add</button>
+</form>
+
+<% if @recipe.ingredients.empty? %>
+  <h3>There are no ingredients yet for this recipe</h3>
+<% else %>
+  <h3>Ingredients</h3>
+  <%= binding.pry %>
+    <% @recipe.ingredients.each_with_index do |ingredient, index| %>
+      <h3><%= ingredient.amounts[index].amount %> &nbsp; <%= ingredient.ingredient_name %></h3>
+    <% end %>
+<% end %>
+
+<form action="/recipes/<%= @recipe.id %>/instructions" method="post">
+  <h3>Add instructions</h3>
+  <input type="hidden" name="_method" value="patch">
+  <textarea id="new_instructions" type="text" name="new_instructions" cols=60 rows=5 placeholder="enter instructional text here"></textarea>
+  <p> </p>
+
+  <button type="submit">Add</button>
+</form>
+
+<% if @recipe.instructions == nil %>
+  <h3>There are no instructions yet for this recipe</h3>
+<% else %>
+  <h3>Instructions</h3>
+  <p><%= @recipe.instructions %></p>
+<% end %>

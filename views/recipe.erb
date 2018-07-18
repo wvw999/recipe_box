@@ -1,0 +1,21 @@
+<h1>Recipe details for <%= @recipe.title %></h1>
+
+<!-- edit recipe button -->
+
+  <% if @recipe.ingredients.empty? %>
+    <h3>There are no ingredients yet for this recipe</h3>
+  <% else %>
+    <h3>Ingredients</h3>
+    <ul>
+      <% @recipe.ingredients.each_with_index do |ingredient, index| %>
+        <li><h3><%= ingredient.amounts[index].amount %> &nbsp; <%= ingredient.ingredient_name %></h3></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <% if @recipe.instructions == nil %>
+    <h3>There are no instructions yet for this recipe</h3>
+  <% else %>
+    <h3>Instructions</h3>
+    <p><%= @recipe.instructions %></p>
+  <% end %>
