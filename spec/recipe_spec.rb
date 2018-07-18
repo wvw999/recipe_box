@@ -21,4 +21,12 @@ describe(Recipe) do
       expect(recipe.tags).to(eq([tag1, tag2]))
     end
   end
+
+  describe('#amounts') do
+    it('') do
+      recipe = Recipe.create({:title => 'grasshopper grains'})
+      ingredient = recipe.ingredients.create({:ingredient_name => 'wheat'})
+      amount = recipe.ingredients
+    end
+  end
 end

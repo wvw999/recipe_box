@@ -17,7 +17,6 @@
   <h3>There are no ingredients yet for this recipe</h3>
 <% else %>
   <h3>Ingredients</h3>
-  <%= binding.pry %>
     <% @recipe.ingredients.each_with_index do |ingredient, index| %>
       <h3><%= ingredient.amounts[index].amount %> &nbsp; <%= ingredient.ingredient_name %></h3>
     <% end %>
