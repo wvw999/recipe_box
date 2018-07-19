@@ -1,5 +1,6 @@
 <h1>Edit the <%= @recipe.title %> Recipe</h1>
-
+<p>tags will live here</p>
+<p>drop down with current tags, field for new tags on same line</p>
 <form action="/recipes/<%= @recipe.id %>/ingredient" method="post">
   <h3>Add ingredient and the amount</h3>
   <input type="hidden" name="_method" value="patch">

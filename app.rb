@@ -57,8 +57,8 @@ get('/recipes/:id/edit') do
   erb(:edit)
 end
 
-#
-
-# post('/recipes/:id/remove') do
-#
-# end
+delete('/recipes/:id/remove') do
+  @recipe = Recipe.find(params[:id])
+  @recipe.destroy
+  redirect '/'
+end
