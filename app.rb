@@ -28,7 +28,7 @@ end
 patch('/recipes/:id/ingredient') do
   @recipe = Recipe.find(params[:id].to_i)
   new_ingredient = @recipe.ingredients.create({:ingredient_name => params["new_ingredient"]})
-  @amount = Amount.find_by recipe_id: @recipe.id
+  @amount = Amount.all.last
   @amount.update(amount: params["amount"])
   # new_ingredient.amounts.create({:amount => params["amount"], :recipe_id => @recipe.id})
   erb(:edit)

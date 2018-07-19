@@ -26,7 +26,9 @@ describe(Recipe) do
     it('') do
       recipe = Recipe.create({:title => 'grasshopper grains'})
       ingredient = recipe.ingredients.create({:ingredient_name => 'wheat'})
-      amount = recipe.ingredients
+      amount = Amount.all.last
+      amount.update(amount: '2 cups')
+      expect(recipe.amounts[0].amount).to include('2 cups')
     end
   end
 end
