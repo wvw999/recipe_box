@@ -1,6 +1,32 @@
 <h1>Edit the <%= @recipe.title %> Recipe</h1>
-<p>tags will live here</p>
-<p>drop down with current tags, field for new tags on same line</p>
+
+<% if @recipe_tags == nil %>
+  <% else %>
+  <% @recipe_tags.each do |tag| %>
+    <%= tag.tag_name %>&nbsp;
+  <% end %>
+<% end %>
+
+<form action="/recipe/<%= @recipe.id %>/tag" method="post">
+  <select id="tags_drop" name="tags_drop">
+    <%if @all_tags != []%>
+      <% @all_tags.each do |tag| %>
+        <option value = "<%= tag.tag_name %>" > <%= tag.tag_name %> </option>
+      <% end %>
+    <% else %>
+      <option value="" disabled selected>no tags yet</option>
+    <% end %>
+  </select>
+  <button type="submit" id="update" class="btn btn-warning">add</button>
+</form>
+
+<p> </p>
+<form class="" action="/recipes/<%= @recipe.id %>/tags/new" method="post">
+  <label for="new_tag">Create a tag</label>
+    <input id="new_tag" name="new_tag" class="form-inline" type="text" placeholder="new tag">
+    <button type="submit" id="update" class="btn btn-warning">create</button>
+</form>
+
 <form action="/recipes/<%= @recipe.id %>/ingredient" method="post">
   <h3>Add ingredient and the amount</h3>
   <input type="hidden" name="_method" value="patch">

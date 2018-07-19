@@ -17,16 +17,17 @@ end
 post('/recipe') do
   recipe_title = params["title"]
   @recipe = Recipe.create({:title => recipe_title})
-  # want the recipe.ingredients to be passed into erb
+  @all_tags = Tag.all
+  # @recipe_tags = Recipe.tags
   @recipe_ingredients = @recipe.ingredients
-  # @ingredients_amounts = @recipe.recipe_with_amount(@recipe.id)
   erb(:edit)
 end
 
 get('/recipes/:id/display') do
   @recipe = Recipe.find(params[:id].to_i)
-  # @ingredients_amounts = @recipe.recipe_with_amount(@recipe.id)
   @recipe_ingredients = @recipe.ingredients
+  @all_tags = Tag.all
+  @recipe_tags = @recipe.tags
   erb(:recipe)
 end
 
@@ -35,24 +36,45 @@ patch('/recipes/:id/ingredient') do
   new_ingredient = @recipe.ingredients.create({:ingredient_name => params["new_ingredient"]})
   @amount = Amount.all.last
   @amount.update(amount: params["amount"])
-  # @ingredients_amounts = @recipe.recipe_with_amount(@recipe.id)
+  @all_tags = Tag.all
+  @recipe_tags = @recipe.tags
   @recipe_ingredients = @recipe.ingredients
-
-  # new_ingredient.amounts.create({:amount => params["amount"], :recipe_id => @recipe.id})
   erb(:edit)
 end
 
 patch('/recipes/:id/instructions') do
   @recipe = Recipe.find(params[:id])
   @recipe.update({:instructions => params["new_instructions"]})
-  # @ingredients_amounts = @recipe.recipe_with_amount(@recipe.id)
+  @all_tags = Tag.all
+  @recipe_tags = @recipe.tags
+  @recipe_ingredients = @recipe.ingredients
+  erb(:edit)
+end
+
+post('/recipes/:id/tags/new') do
+  @recipe = Recipe.find(params[:id].to_i)
+  tag_name = params["new_tag"]
+  new_tag = @recipe.tags.create({:tag_name => tag_name})
+  @recipe_tags = @recipe.tags
+  @all_tags = Tag.all
+  @recipe_ingredients = @recipe.ingredients
+  erb(:edit)
+end
+
+post('/recipe/:id/tag') do
+  @recipe = Recipe.find(params[:id].to_i)
+  @recipe_tags = @recipe.tags
+  add_tag = params["tags_drop"]
+  @recipe.tags.find_or_create_by({:tag_name => add_tag})
+  @all_tags = Tag.all
   @recipe_ingredients = @recipe.ingredients
   erb(:edit)
 end
 
 get('/recipes/:id/edit') do
-  @recipe = Recipe.find(params[:id])
-  # @ingredients_amounts = @recipe.recipe_with_amount(@recipe.id)
+  @recipe = Recipe.find(params[:id].to_i)
+  @all_tags = Tag.all
+  @recipe_tags = @recipe.tags
   @recipe_ingredients = @recipe.ingredients
   erb(:edit)
 end

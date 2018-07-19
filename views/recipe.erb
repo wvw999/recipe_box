@@ -1,5 +1,12 @@
 <h1>Recipe details for <%= @recipe.title %></h1>
 
+<% if @recipe_tags == nil %>
+  <% else %>
+  <% @recipe_tags.each do |tag| %>
+    <%= tag.tag_name %>&nbsp;
+  <% end %>
+<% end %>
+
 <form class="form-inline" action="/recipes/<%= @recipe.id %>/edit" method="get">
   <button type="submit" class="btn btn-warning">Edit Recipe</button>
 </form>
