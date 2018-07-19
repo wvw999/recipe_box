@@ -8,8 +8,9 @@
     <h3>There are no ingredients yet for this recipe</h3>
   <% else %>
     <h3>Ingredients</h3>
-      <% @ingredients_amounts.each do |ingredient| %>
-        <h3><%= ingredient[1] %> &nbsp; <%= ingredient[0] %></h3>
+      <% @recipe.amounts.each do |element| %>
+        <% ingr_id = element.ingredient_id %>
+        <h3><%= element.amount %> &nbsp; <%= @recipe_ingredients.find(ingr_id).ingredient_name %></h3>
       <% end %>
   <% end %>
 
