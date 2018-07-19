@@ -1,16 +1,16 @@
 <h1>Recipe details for <%= @recipe.title %></h1>
 
-<!-- edit recipe button -->
+<form class="form-inline" action="/recipes/<%= @recipe.id %>/edit" method="get">
+  <button type="submit" class="btn btn-warning">Edit Recipe</button>
+</form>
 
   <% if @recipe.ingredients.empty? %>
     <h3>There are no ingredients yet for this recipe</h3>
   <% else %>
     <h3>Ingredients</h3>
-    <ul>
-      <% @recipe.ingredients.each_with_index do |ingredient, index| %>
-        <li><h3><%= ingredient.amounts[index].amount %> &nbsp; <%= ingredient.ingredient_name %></h3></li>
+      <% @ingredients_amounts.each do |ingredient| %>
+        <h3><%= ingredient[1] %> &nbsp; <%= ingredient[0] %></h3>
       <% end %>
-    </ul>
   <% end %>
 
   <% if @recipe.instructions == nil %>
@@ -19,3 +19,7 @@
     <h3>Instructions</h3>
     <p><%= @recipe.instructions %></p>
   <% end %>
+
+  <form class="form-inline" action="/" method="get">
+    <button type="submit" class="btn btn-primary">Back</button>
+  </form>

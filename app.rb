@@ -17,19 +17,24 @@ end
 post('/recipe') do
   recipe_title = params["title"]
   @recipe = Recipe.create({:title => recipe_title})
+  @ingredients_amounts = @recipe.recipe_with_amount(@recipe.id)
   erb(:edit)
 end
 
 get('/recipes/:id/display') do
   @recipe = Recipe.find(params[:id].to_i)
+  @ingredients_amounts = @recipe.recipe_with_amount(@recipe.id)
   erb(:recipe)
 end
 
 patch('/recipes/:id/ingredient') do
   @recipe = Recipe.find(params[:id].to_i)
+
+
   new_ingredient = @recipe.ingredients.create({:ingredient_name => params["new_ingredient"]})
   @amount = Amount.all.last
   @amount.update(amount: params["amount"])
+  @ingredients_amounts = @recipe.recipe_with_amount(@recipe.id)
   # new_ingredient.amounts.create({:amount => params["amount"], :recipe_id => @recipe.id})
   erb(:edit)
 end
@@ -37,11 +42,13 @@ end
 patch('/recipes/:id/instructions') do
   @recipe = Recipe.find(params[:id])
   @recipe.update({:instructions => params["new_instructions"]})
+  @ingredients_amounts = @recipe.recipe_with_amount(@recipe.id)
   erb(:edit)
 end
 
 get('/recipes/:id/edit') do
   @recipe = Recipe.find(params[:id])
+  @ingredients_amounts = @recipe.recipe_with_amount(@recipe.id)
   erb(:edit)
 end
 

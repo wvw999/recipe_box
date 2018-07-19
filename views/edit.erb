@@ -10,16 +10,16 @@
   <label for="amount">Ingredient Amount</label>
   <input id="amount" type="text" name="amount">
 
-  <button type="submit">Add</button>
+  <button type="submit" class="btn btn-info">Add</button>
 </form>
 
-<% if @recipe.ingredients.empty? %>
+<% if @recipe.ingredients == nil %>
   <h3>There are no ingredients yet for this recipe</h3>
 <% else %>
   <h3>Ingredients</h3>
-    <% @recipe.ingredients.each_with_index do |ingredient, index| %>
-      <h3><%= ingredient.amounts[index].amount %> &nbsp; <%= ingredient.ingredient_name %></h3>
-    <% end %>
+  <% @ingredients_amounts.each do |ingredient| %>
+    <h3><%= ingredient[1] %> &nbsp; <%= ingredient[0] %></h3>
+  <% end %>
 <% end %>
 
 <form action="/recipes/<%= @recipe.id %>/instructions" method="post">
@@ -28,7 +28,7 @@
   <textarea id="new_instructions" type="text" name="new_instructions" cols=60 rows=5 placeholder="enter instructional text here"></textarea>
   <p> </p>
 
-  <button type="submit">Add</button>
+  <button type="submit" class="btn btn-info">Add</button>
 </form>
 
 <% if @recipe.instructions == nil %>
@@ -37,3 +37,7 @@
   <h3>Instructions</h3>
   <p><%= @recipe.instructions %></p>
 <% end %>
+
+<form class="form-inline" action="/" method="get">
+  <button type="submit" class="btn btn-warning">Back</button>
+</form>
